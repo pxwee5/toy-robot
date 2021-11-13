@@ -1,8 +1,8 @@
 const table = {
   xMin: 0,
-  xMax: 5,
+  xMax: 4,
   yMin: 0,
-  yMax: 5,
+  yMax: 4,
 
   isValidX(x) {
     return x >= this.xMin && x <= this.xMax;
