@@ -52,33 +52,55 @@ class Robot {
     };
   }
 
-  place({ x = 0, y = 0, heading = "NORTH" }) {
-    this.x = x;
-    this.y = y;
-    this.heading = headings[heading];
+  /**
+   * @returns {Boolean}
+   */
+  place(params) {
+    const { x = 0, y = 0, heading = "NORTH" } = params;
+
+    if (this.isValidPlacement(params)) {
+      this.x = x;
+      this.y = y;
+      this.heading = headings[heading];
+      return true;
+    }
+
+    return false;
   }
 
   move() {
-    const newPosX = this.x + this.magnitude.x;
-    const newPosY = this.y + this.magnitude.y;
+    if (this.isPlaced) {
+      const newPosX = this.x + this.magnitude.x;
+      const newPosY = this.y + this.magnitude.y;
 
-    if (!table.isValidX(newPosX) || !table.isValidY(newPosY)) {
-      console.log(
-        `Moving to (${newPosX}, ${newPosY}) is not possible. Please turn around.`
-      );
-      return;
+      if (!table.isValidX(newPosX) || !table.isValidY(newPosY)) {
+        console.log(
+          `Moving to (${newPosX}, ${newPosY}) is not possible. Please turn around.`
+        );
+        return;
+      }
+
+      this.x = newPosX;
+      this.y = newPosY;
+      return true;
     }
-
-    this.x = newPosX;
-    this.y = newPosY;
+    return false;
   }
 
   turnLeft() {
-    this.heading += 90;
+    if (this.isPlaced) {
+      this.heading += 90;
+      return true;
+    }
+    return false;
   }
 
   turnRight() {
-    this.heading -= 90;
+    if (this.isPlaced) {
+      this.heading -= 90;
+      return true;
+    }
+    return false;
   }
 
   report() {

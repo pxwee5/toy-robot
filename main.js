@@ -68,8 +68,7 @@ function placeCommand() {
     .then((answers) => {
       console.log("\n");
 
-      if (robot.isValidPlacement(answers)) {
-        robot.place(answers);
+      if (robot.place(answers)) {
         play();
       } else {
         console.log(
