@@ -12,28 +12,24 @@ const robot = new Robot();
 play();
 
 function play() {
-  robot.report();
-  
   inquirer
     .prompt([
       {
         type: "input",
         name: "command",
-        message: `Take an action (${validCommands.join(", ")}):`,
+        message: `Make a move (${validCommands.join(", ")}):`,
         filter: (input) => formatString(input),
       },
     ])
     .then((answers) => {
-      console.log("\n");
-
       if (!isValidCommand(answers.command)) {
-        console.log("This is not a valid command. Please try again.");
-        return play();
+        console.warn("\nThis is not a valid command. Please try again.");
+        return replay();
       }
 
       if (answers.command !== actions.PLACE && !robot.isPlaced) {
-        console.log("The robot is not placed yet. Place robot first.");
-        return play();
+        console.warn("\nThe robot is not placed yet. Place robot first.");
+        return replay();
       }
 
       commandDelegator(answers.command);
@@ -41,6 +37,11 @@ function play() {
     .catch((error) => {
       console.error(error);
     });
+}
+
+function replay() {
+  console.log(''); // newline
+  play();
 }
 
 function placeCommand() {
@@ -67,14 +68,13 @@ function placeCommand() {
       },
     ])
     .then((answers) => {
-      console.log("\n");
-
       if (robot.place(answers)) {
-        play();
+        replay();
       } else {
-        console.log(
-          "One or more the coordinates are invalid. Please try again."
+        console.warn(
+          "\nOne or more the coordinates are invalid. Please try again."
         );
+        console.log(''); // newline
         placeCommand();
       }
     });
@@ -82,22 +82,21 @@ function placeCommand() {
 
 function moveCommand() {
   robot.move();
-  play();
+  replay();
 }
 
 function leftCommand() {
   robot.turnLeft();
-  play();
+  replay();
 }
 
 function rightCommand() {
   robot.turnRight();
-  play();
+  replay();
 }
 
 function reportCommand() {
   robot.report();
-  play();
 }
 
 function commandDelegator(command) {

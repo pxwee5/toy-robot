@@ -74,7 +74,7 @@ class Robot {
       const newPosY = this.y + this.magnitude.y;
 
       if (!table.isValidX(newPosX) || !table.isValidY(newPosY)) {
-        console.log(
+        console.warn(
           `Moving to (${newPosX}, ${newPosY}) is not possible. Please turn around.`
         );
         return;
