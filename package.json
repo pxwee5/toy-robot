@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "serve": "node main.js",
+    "test": "yarn jest"
+  },
   "dependencies": {
     "inquirer": "^8.2.0",
     "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "jest": "^27.3.1"
   }
 }
