@@ -3,6 +3,7 @@ const Robot = require("./src/objects/Robot");
 
 const actions = require("./src/constants/actions");
 const headings = require("./src/constants/headings");
+const formatString = require("./src/utils/formatString");
 
 const validCommands = Object.values(actions);
 const validHeadings = Object.keys(headings);
@@ -110,9 +111,4 @@ function commandDelegator(command) {
 function isValidCommand(command) {
   const uppercaseCommand = command?.toUpperCase();
   return validCommands.includes(uppercaseCommand);
-}
-
-function formatString(string = '') {
-  const match = string?.match(/[a-zA-Z]+/g);
-  return match?.[0]?.toUpperCase();
 }
